@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">sqlite3</span>
+<span class="s1">conn = sqlite3.connect(</span><span class="s2">&quot;movies.db&quot;</span><span class="s1">)</span>
+<span class="s1">cursor = conn.cursor()</span>
+
+<span class="s1">cursor.execute(</span><span class="s2">''' 
+    CREATE TABLE IF NOT EXISTS Фільми ( 
+        ID INTEGER PRIMARY KEY AUTOINCREMENT, 
+        Назва TEXT, 
+        Режисер TEXT, 
+        Рік_випуску INTEGER, 
+        Бюджет REAL, 
+        Оцінка REAL 
+    ) 
+'''</span><span class="s1">)</span>
+
+<span class="s1">data = [</span>
+    <span class="s1">(</span><span class="s2">'Барбі'</span><span class="s0">, </span><span class="s2">'Ґрета Ґервіґ'</span><span class="s0">, </span><span class="s3">2023</span><span class="s0">, </span><span class="s3">145.0</span><span class="s0">, </span><span class="s3">3.0</span><span class="s1">)</span><span class="s0">,</span>
+    <span class="s1">(</span><span class="s2">'Загублене місто'</span><span class="s0">, </span><span class="s2">'Аарон Ні, Адам Ні'</span><span class="s0">, </span><span class="s3">2022</span><span class="s0">, </span><span class="s3">68.0</span><span class="s0">, </span><span class="s3">3.3</span><span class="s1">)</span><span class="s0">,</span>
+    <span class="s1">(</span><span class="s2">'Шпіон'</span><span class="s0">, </span><span class="s2">'Пол Фіг'</span><span class="s0">, </span><span class="s3">2015</span><span class="s0">, </span><span class="s3">65.0</span><span class="s0">, </span><span class="s3">4.4</span><span class="s1">)</span><span class="s0">,</span>
+    <span class="s1">(</span><span class="s2">'Аладін'</span><span class="s0">, </span><span class="s2">'Гай Річі'</span><span class="s0">, </span><span class="s3">2019</span><span class="s0">, </span><span class="s3">183.0</span><span class="s0">, </span><span class="s3">4.0</span><span class="s1">)</span><span class="s0">,</span>
+    <span class="s1">(</span><span class="s2">'Пірати Карибського моря: Прокляття Чорної перлини'</span><span class="s0">, </span><span class="s2">'Гор Вербінскі'</span><span class="s0">, </span><span class="s3">2003</span><span class="s0">, </span><span class="s3">140.0</span><span class="s0">, </span><span class="s3">4.5</span><span class="s1">)</span>
+<span class="s1">]</span>
+<span class="s1">cursor.executemany(</span><span class="s2">'INSERT INTO Фільми (Назва, Режисер, Рік_випуску, Бюджет, Оцінка) VALUES (?,?,?,?,?)'</span><span class="s0">, </span><span class="s1">data)</span>
+<span class="s1">conn.commit()</span>
+
+<span class="s1">cursor.execute(</span><span class="s2">'SELECT * FROM Фільми'</span><span class="s1">)</span>
+<span class="s1">result = cursor.fetchall()</span>
+<span class="s0">for </span><span class="s1">row </span><span class="s0">in </span><span class="s1">result:</span>
+    <span class="s1">print(row)</span>
+
+<span class="s1">cursor.execute(</span><span class="s2">'SELECT * FROM Фільми WHERE Оцінка &gt;= 4.0'</span><span class="s1">)</span>
+<span class="s1">result = cursor.fetchall()</span>
+<span class="s0">for </span><span class="s1">row </span><span class="s0">in </span><span class="s1">result:</span>
+    <span class="s1">print(row)</span>
+
+<span class="s1">cursor.execute(</span><span class="s2">'UPDATE Фільми SET Оцінка = 4.7 WHERE Назва = ?'</span><span class="s0">, </span><span class="s1">(</span><span class="s2">'Аладін'</span><span class="s0">,</span><span class="s1">))</span>
+<span class="s1">conn.commit()</span>
+
+<span class="s1">cursor.execute(</span><span class="s2">'SELECT * FROM Фільми'</span><span class="s1">)</span>
+<span class="s1">result = cursor.fetchall()</span>
+<span class="s0">for </span><span class="s1">row </span><span class="s0">in </span><span class="s1">result:</span>
+    <span class="s1">print(row)</span>
+
+<span class="s1">cursor.execute(</span><span class="s2">'SELECT * FROM Фільми WHERE Оцінка &gt;= 4.0'</span><span class="s1">)</span>
+<span class="s1">result = cursor.fetchall()</span>
+<span class="s0">for </span><span class="s1">row </span><span class="s0">in </span><span class="s1">result:</span>
+    <span class="s1">print(row)</span>
+
+</pre>
+</body>
+</html>
